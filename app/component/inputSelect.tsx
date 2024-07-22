@@ -2,10 +2,12 @@ import { Dispatch, SetStateAction } from "react";
 
 interface InputSelectProps {
   type: "typeOfArtist" | "numbeOfArtist" | "placeOfBirth";
-  typeOfArtist: "Singolo" | "Band";
-  numberOfArtist: number;
+  typeOfArtist?: "Singolo" | "Band";
+  numberOfArtist?: number;
+  countryOfArtist?: string;
   setTypeOfArtist?: Dispatch<SetStateAction<"Singolo" | "Band">>;
   setNumberOfArtist?: Dispatch<SetStateAction<number>>;
+  setCountryOfArtist?: Dispatch<SetStateAction<string>>;
 }
 
 export default function InputSelect({
@@ -14,6 +16,8 @@ export default function InputSelect({
   setTypeOfArtist,
   typeOfArtist,
   numberOfArtist,
+  countryOfArtist,
+  setCountryOfArtist,
 }: InputSelectProps) {
   const handleTypeOfArtistChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (setTypeOfArtist && setNumberOfArtist) {
@@ -54,7 +58,7 @@ export default function InputSelect({
         </select>
       )}
       {type === "placeOfBirth" && (
-        <select className="w-full py-3 px-6 bg-white rounded-full shadow-md text-primary-blue">
+        <select className="w-full py-3 px-6 bg-white rounded-full shadow-md text-primary-blue" value={countryOfArtist}>
           <option value="city1">City 1</option>
           <option value="city2">City 2</option>
           <option value="city3">City 3</option>
