@@ -1,6 +1,8 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 import "./tailwind.css";
 import "app/style.css";
+import { ArtistProvider } from "./context/ArtistContext";
+import { ReservationProvider } from "./context/ReservationContext";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,9 +14,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+        <ReservationProvider>
+          <ArtistProvider>
+            {children}
+            <ScrollRestoration />
+            <Scripts />
+          </ArtistProvider>
+        </ReservationProvider>
       </body>
     </html>
   );

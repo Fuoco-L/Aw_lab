@@ -1,18 +1,29 @@
-import { useState } from "react";
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import InputSelect from "./inputSelect";
 import Uploader from "./uploaderVideo";
 import InputCheckbox from "./checkboxCustom";
-import FormArtist from "./formForArtist";
+import { useArtistContext } from "~/context/ArtistContext";
+import ArtistForm from "./formForArtist";
+import { sendData } from "~/utils";
 
 export default function FormCustom() {
-  const [numberOfArtist, setNumberOfArtist] = useState<number>(1);
-  const [typeOfArtist, setTypeOfArtist] = useState<"Singolo" | "Band">("Singolo");
-  const [nameOfArtist, setNameOfArtist] = useState<string>("");
-  const [nameOfSong, setNameOfSong] = useState<string>("");
-
-  console.log(numberOfArtist, typeOfArtist, nameOfArtist, nameOfSong);
-
-  const artistArray = Array.from({ length: numberOfArtist }, (_, index) => index + 1);
+  const {
+    numberOfArtist,
+    setNumberOfArtist,
+    typeOfArtist,
+    setTypeOfArtist,
+    nameOfArtist,
+    setNameOfArtist,
+    nameOfSong,
+    setNameOfSong,
+    terms,
+    setTerms,
+    disclaimer,
+    setDisclaimer,
+    subscribedComponents,
+  } = useArtistContext();
 
   return (
     <div className="container mx-auto p-4 flex flex-col justify-center items-center">
@@ -32,13 +43,13 @@ export default function FormCustom() {
         />
         <input
           type="text"
-          className="w-full py-3 px-6 bg-white rounded-full shadow-md"
+          className="w-full py-3 px-6 bg-white rounded-full shadow-md border-gray-200 border-2"
           placeholder="Nome cantante/band"
           onChange={(e) => setNameOfArtist(e.target.value)}
         />
         <input
           type="text"
-          className="w-full py-3 px-6 bg-white rounded-full shadow-md"
+          className="w-full py-3 px-6 bg-white rounded-full shadow-md border-gray-200 border-2"
           placeholder="Titolo del brano"
           onChange={(e) => setNameOfSong(e.target.value)}
         />
@@ -50,23 +61,32 @@ export default function FormCustom() {
         <p>Un solo video contenente un brano: MOV, MP4, peso max:10mb, durata max: 04:00</p>
       </div>
 
-      {artistArray.map((artist) => (
-        <FormArtist key={artist} />
+      {Array.from({ length: numberOfArtist }).map((_, index) => (
+        <ArtistForm key={index} index={index} />
       ))}
 
       <div className="mb-4">
         <InputCheckbox
-          checked
+          checked={terms}
           label="Accetto i termini di cui al regolamento e prendo visione e accetto l’informativa privacy ivi contenuta;"
-          onChange={() => ""}
+          onChange={(value) => setTerms(value)}
         />
       </div>
 
       <InputCheckbox
-        checked
+        checked={disclaimer}
         label="Accetto il disclaimer relativo all’assunzione di responsabilità riguardo i contenuti caricati."
-        onChange={() => ""}
+        onChange={(value) => setDisclaimer(value)}
       />
+
+      <div
+        className="button-gradient cursor-pointer max-w-96 mx-auto text-center mt-12 w-80"
+        onClick={() =>
+          sendData({ typeOfArtist, nameOfArtist, nameOfSong, numberOfArtist, subscribedComponents, terms, disclaimer })
+        }
+      >
+        Invia candidatura
+      </div>
     </div>
   );
 }

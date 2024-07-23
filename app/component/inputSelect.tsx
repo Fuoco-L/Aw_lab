@@ -7,7 +7,7 @@ interface InputSelectProps {
   countryOfArtist?: string;
   setTypeOfArtist?: Dispatch<SetStateAction<"Singolo" | "Band">>;
   setNumberOfArtist?: Dispatch<SetStateAction<number>>;
-  setCountryOfArtist?: Dispatch<SetStateAction<string>>;
+  setCountryOfArtist?: (arg0: string) => void;
 }
 
 export default function InputSelect({
@@ -35,11 +35,18 @@ export default function InputSelect({
     }
   };
 
+  const handleCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (setCountryOfArtist) {
+      const value = event.target.value;
+      setCountryOfArtist(value);
+    }
+  };
+
   return (
     <>
       {type === "typeOfArtist" && (
         <select
-          className="w-full py-3 px-6 bg-white rounded-full shadow-md text-primary-blue"
+          className="w-full py-3 px-6 bg-white rounded-full shadow-md border-gray-200 border-2 text-primary-blue"
           onChange={handleTypeOfArtistChange}
         >
           <option value="Singolo">Singolo</option>
@@ -48,17 +55,21 @@ export default function InputSelect({
       )}
       {type === "numbeOfArtist" && (
         <select
-          className="w-full py-3 px-6 bg-white rounded-full shadow-md text-primary-blue"
+          className="w-full py-3 px-6 bg-white rounded-full shadow-md border-gray-200 border-2 text-primary-blue"
           onChange={handleNumberOfArtistChange}
           value={numberOfArtist}
         >
-          {typeOfArtist === "Singolo" && <option value={"1"}>1</option>}
-          {typeOfArtist === "Band" && <option value={"2"}>2</option>}
-          {typeOfArtist === "Band" && <option value={"3"}>3</option>}
+          {(typeOfArtist === "Singolo" || typeOfArtist === undefined) && <option value={"1"}>1</option>}
+          {(typeOfArtist === "Band" || typeOfArtist === undefined) && <option value={"2"}>2</option>}
+          {(typeOfArtist === "Band" || typeOfArtist === undefined) && <option value={"3"}>3</option>}
         </select>
       )}
       {type === "placeOfBirth" && (
-        <select className="w-full py-3 px-6 bg-white rounded-full shadow-md text-primary-blue" value={countryOfArtist}>
+        <select
+          className="w-full py-3 px-6 bg-white rounded-full shadow-md border-gray-200 border-2 text-primary-blue"
+          value={countryOfArtist}
+          onChange={handleCountryChange}
+        >
           <option value="city1">City 1</option>
           <option value="city2">City 2</option>
           <option value="city3">City 3</option>

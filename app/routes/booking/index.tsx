@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import Logo from "app/assets/images/logo.png";
 import Background from "app/assets/images/home_background.jpg";
 import BookingVideo from "app/assets/images/booking-video.jpg";
@@ -12,6 +14,7 @@ export default function Booking() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
+          paddingBottom: "50px",
         }}
       >
         <div className="flex flex-col items-center container font-medium">

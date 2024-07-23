@@ -10,8 +10,9 @@ import { useNavigate } from "@remix-run/react";
 export default function Homepage() {
   const navigate = useNavigate();
 
-  function handleNavigate() {
-    navigate("/booking");
+  function handleNavigate(to: "booking" | "reservation") {
+    if (to === "booking") navigate("/booking");
+    else navigate("vanReservation");
   }
   return (
     <div className="w-full">
@@ -38,10 +39,12 @@ export default function Homepage() {
             </p>
           </div>
           <div className=" flex flex-row">
-            <button className="button-white mr-14 cursor-pointer" onClick={() => handleNavigate()}>
+            <button className="button-white mr-14 cursor-pointer" onClick={() => handleNavigate("booking")}>
               Carica video
             </button>
-            <div className="button-gradient cursor-pointer mb-64">Prenota la tua session</div>
+            <button className="button-gradient cursor-pointer mb-64" onClick={() => handleNavigate("reservation")}>
+              Prenota la tua session
+            </button>
           </div>
         </div>
       </div>

@@ -8,9 +8,11 @@ export default function InputCheckbox({ label, checked, onChange }: InputCheckbo
   return (
     <label className="flex items-center space-x-2">
       <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="hidden" />
-      <div className="w-8 h-8 border-2 rounded-full flex items-center justify-center bg-white">
+      <div
+        className={`w-8 h-8 border-2 rounded-full flex items-center justify-center ${checked ? "bg-primary-blue" : "bg-white"}`}
+      >
         {checked && (
-          <svg className="w-6 h-6 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
           </svg>
         )}

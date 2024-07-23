@@ -1,6 +1,11 @@
 import { getMonth, getYear } from "date-fns";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+interface DatePickerCustomProps {
+  setDateOfBirth: (date: Date) => void;
+}
 
 function range(start: number, end: number, step: number): number[] {
   const result: number[] = [];
@@ -10,9 +15,9 @@ function range(start: number, end: number, step: number): number[] {
   return result;
 }
 
-export default function DatePickerCustom() {
+export default function DatePickerCustom({ setDateOfBirth }: DatePickerCustomProps) {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const years = range(1990, getYear(new Date()) + 1, 1);
+  const years = range(1960, getYear(new Date()) + 1, 1);
   const months = [
     "January",
     "February",
@@ -27,6 +32,12 @@ export default function DatePickerCustom() {
     "November",
     "December",
   ];
+
+  const handleDateChange = (date: Date | null) => {
+    setStartDate(date);
+    if (date !== null) setDateOfBirth(date);
+  };
+
   return (
     <DatePicker
       renderCustomHeader={({
@@ -48,8 +59,8 @@ export default function DatePickerCustom() {
           <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
             {"<"}
           </button>
-          <select value={getYear(date)} onChange={({ target: { value } }) => changeYear(value)}>
-            {years.map((option: any) => (
+          <select value={getYear(date)} onChange={({ target: { value } }) => changeYear(Number(value))}>
+            {years.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>
@@ -70,8 +81,8 @@ export default function DatePickerCustom() {
         </div>
       )}
       selected={startDate}
-      onChange={(date) => setStartDate(date)}
-      className="w-full py-3 px-6 bg-white rounded-full shadow-md text-primary-blue"
+      onChange={(date) => handleDateChange(date)}
+      className="w-full py-3 px-6 bg-white rounded-full shadow-md border-gray-200 border-2 text-primary-blue"
     />
   );
 }

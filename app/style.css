@@ -16,18 +16,18 @@
 
 /* button */
 .button-white {
-  padding: 0 20px;
-  height: 30px;
-  line-height: 30px;
-  border-radius: 15px;
+  padding: 0 30px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 20px;
   background: #ffffff;
   color: #0b62aa;
 }
 .button-gradient {
-  padding: 0 20px;
-  height: 30px;
-  line-height: 30px;
-  border-radius: 15px;
+  padding: 0 30px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 20px;
   background: linear-gradient(to right, #86b0c0 0%, #176bb1 100%);
   color: #ffffff;
 }
